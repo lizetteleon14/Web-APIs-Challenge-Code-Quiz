@@ -24,7 +24,7 @@
     <section>
         <p>
             The URL of the deployed application
-            <a href="">The URL of the deployed application</a>
+            <a href="https://lizetteleon14.github.io/Web-APIs-Challenge-Code-Quiz/">The URL of the deployed application</a>
         </p>
     </section>
     <section>
