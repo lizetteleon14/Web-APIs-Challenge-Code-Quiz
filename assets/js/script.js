@@ -172,7 +172,7 @@ function replayQuiz(){
     highscoreContainer.style.display = "none";
     gameoverDiv.style.display = "none";
     startQuizDiv.style.display = "flex";
-    timeLeft = 76;
+    timeLeft = 60;
     score = 0;
     currentQuestionIndex = 0;
 }
@@ -183,12 +183,12 @@ function checkAnswer(answer){
 
     if (answer === correct && currentQuestionIndex !== finalQuestionIndex){
         score++;
-        alert("That Is Correct!");
+        alert("Correct");
         currentQuestionIndex++;
         generateQuizQuestion();
         //display in the results div that the answer is correct.
     }else if (answer !== correct && currentQuestionIndex !== finalQuestionIndex){
-        alert("That Is Incorrect.")
+        alert("Incorrect")
         currentQuestionIndex++;
         generateQuizQuestion();
         //display in the results div that the answer is wrong.
