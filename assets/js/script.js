@@ -19,6 +19,7 @@ var endGameBtns = document.getElementById("endGameBtns");
 var submitScoreBtn = document.getElementById("submitScore");
 var displayHighScore = document.getElementById("highscore-score");
 
+
 // The five Quiz questions to be answered by user
 var quizQuestions = [{
     question: "Commonly used data types DO Not Include?",
@@ -56,10 +57,10 @@ var quizQuestions = [{
     choiceD: "4.console log",
     correctAnswer: "d"},  
     ];
-
+    
 // Adding timer length to Quiz
-var finalQuestion = quizQuestions.length;
-var currentQuestion = 0;
+var finalQuestionIndex = quizQuestions.length;
+var currentQuestionIndex = 0;
 var timeLeft = 60;
 var timerInterval;
 var score = 0;
@@ -68,10 +69,10 @@ var correct;
 //function that displays the quiz questons as selections are made
 function generateQuizQuestion(){
     gameoverDiv.style.display = "none";
-    if (currentQuestion === finalQuestion){
+    if (currentQuestionIndex === finalQuestionIndex){
         return showScore();
     } 
-    var currentQuestion = quizQuestions[currentQuestion];
+    var currentQuestion = quizQuestions[currentQuestionIndex];
     questionsEl.innerHTML = "<p>" + currentQuestion.question + "</p>";
     buttonA.innerHTML = currentQuestion.choiceA;
     buttonB.innerHTML = currentQuestion.choiceB;
@@ -91,10 +92,10 @@ function startQuiz(){
         timer.textContent = "Time left: " + timeLeft;
     
         if(timeLeft === 0) {
-            clearInterval(timerInterval);
-            showScore();
+          clearInterval(timerInterval);
+          showScore();
         }
-    }, 1000);
+      }, 1000);
     quizEl.style.display = "block";
 }
 
@@ -148,6 +149,7 @@ function generateHighscores(){
     }
 }
 
+// List of high scores and saving high scores to local storage
 function showHighscore(){
     startQuizDiv.style.display = "none"
     gameoverDiv.style.display = "none";
@@ -158,36 +160,38 @@ function showHighscore(){
     generateHighscores();
 }
 
-// when user clicks the clear score button all of the score history is cleared 
+
 function clearScore(){
     window.localStorage.clear();
     displayHighScoreName.textContent = "";
     displayHighScore.textContent = "";
 }
 
-// when user clicks the go back button then the user will be able to start the quiz over again 
+// Function to start quiz again after selecting the go back button 
 function replayQuiz(){
     highscoreContainer.style.display = "none";
     gameoverDiv.style.display = "none";
     startQuizDiv.style.display = "flex";
     timeLeft = 76;
     score = 0;
-    currentQuestion = 0;
+    currentQuestionIndex = 0;
 }
 
-// checks the answers selected
+// This function checks the response to each answer 
 function checkAnswer(answer){
-    correct = quizQuestions[currentQuestion].correctAnswer;
+    correct = quizQuestions[currentQuestionIndex].correctAnswer;
 
-    if (answer === correct && currentQuestion !== finalQuestion){
+    if (answer === correct && currentQuestionIndex !== finalQuestionIndex){
         score++;
         alert("That Is Correct!");
-        currentQuestion++;
+        currentQuestionIndex++;
         generateQuizQuestion();
-    }else if (answer !== correct && currentQuestion !== finalQuestion){
+        //display in the results div that the answer is correct.
+    }else if (answer !== correct && currentQuestionIndex !== finalQuestionIndex){
         alert("That Is Incorrect.")
-        currentQuestion++;
+        currentQuestionIndex++;
         generateQuizQuestion();
+        //display in the results div that the answer is wrong.
     }else{
         showScore();
     }
