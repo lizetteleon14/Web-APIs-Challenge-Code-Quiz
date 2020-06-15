@@ -58,8 +58,8 @@ var quizQuestions = [{
     ];
 
 // Adding timer length to Quiz
-var finalQuestionIndex = quizQuestions.length;
-var currentQuestionIndex = 0;
+var finalQuestion = quizQuestions.length;
+var currentQuestion = 0;
 var timeLeft = 60;
 var timerInterval;
 var score = 0;
@@ -68,10 +68,10 @@ var correct;
 //function that displays the quiz questons as selections are made
 function generateQuizQuestion(){
     gameoverDiv.style.display = "none";
-    if (currentQuestionIndex === finalQuestionIndex){
+    if (currentQuestion === finalQuestion){
         return showScore();
     } 
-    var currentQuestion = quizQuestions[currentQuestionIndex];
+    var currentQuestion = quizQuestions[currentQuestion];
     questionsEl.innerHTML = "<p>" + currentQuestion.question + "</p>";
     buttonA.innerHTML = currentQuestion.choiceA;
     buttonB.innerHTML = currentQuestion.choiceB;
@@ -157,3 +157,41 @@ function showHighscore(){
 
     generateHighscores();
 }
+
+// when user clicks the clear score button all of the score history is cleared 
+function clearScore(){
+    window.localStorage.clear();
+    displayHighScoreName.textContent = "";
+    displayHighScore.textContent = "";
+}
+
+// when user clicks the go back button then the user will be able to start the quiz over again 
+function replayQuiz(){
+    highscoreContainer.style.display = "none";
+    gameoverDiv.style.display = "none";
+    startQuizDiv.style.display = "flex";
+    timeLeft = 76;
+    score = 0;
+    currentQuestion = 0;
+}
+
+// checks the answers selected
+function checkAnswer(answer){
+    correct = quizQuestions[currentQuestion].correctAnswer;
+
+    if (answer === correct && currentQuestion !== finalQuestion){
+        score++;
+        alert("That Is Correct!");
+        currentQuestion++;
+        generateQuizQuestion();
+    }else if (answer !== correct && currentQuestion !== finalQuestion){
+        alert("That Is Incorrect.")
+        currentQuestion++;
+        generateQuizQuestion();
+    }else{
+        showScore();
+    }
+}
+
+// This button starts the quiz!
+startQuizButton.addEventListener("click",startQuiz);
