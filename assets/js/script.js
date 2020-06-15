@@ -78,3 +78,30 @@ function generateQuizQuestion(){
     buttonC.innerHTML = currentQuestion.choiceC;
     buttonD.innerHTML = currentQuestion.choiceD;
 };
+
+// Function to start timer and prompt the first question onto screen and at the end of the quiz a score is displayed
+function startQuiz(){
+    gameoverDiv.style.display = "none";
+    startQuizDiv.style.display = "none";
+    generateQuizQuestion();
+
+    //Timer
+    timerInterval = setInterval(function() {
+        timeLeft--;
+        timer.textContent = "Time left: " + timeLeft;
+    
+        if(timeLeft === 0) {
+          clearInterval(timerInterval);
+          showScore();
+        }
+      }, 1000);
+    quizEl.style.display = "block";
+}
+
+function showScore(){
+    quizEl.style.display = "none"
+    gameoverDiv.style.display = "flex";
+    clearInterval(timerInterval);
+    inputHighScoreName.value = "";
+    scoreEl.innerHTML = "You got " + score + " out of " + quizQuestions.length + " correct!";
+}
